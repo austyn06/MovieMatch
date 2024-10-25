@@ -1,2 +1,7 @@
-# term-project-team7
-term-project-team7 created by GitHub Classroom
+# Team 7 - Movie Recommendation System
+
+```bash
+cd ../movie-recommendation
+npm install
+npm run dev
+```
