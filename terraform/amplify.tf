@@ -12,13 +12,12 @@ resource "aws_amplify_app" "amplify_app" {
       phases:
         preBuild:
           commands:
-            - cd movie-recommendation
             - npm ci --include=dev
         build:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: ./movie-recommendation/dist
+        baseDirectory: ./dist
         files:
           - '**/*'
       cache:
