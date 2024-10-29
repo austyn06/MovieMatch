@@ -17,7 +17,7 @@ resource "aws_amplify_app" "amplify_app" {
           commands:
             - npm run build
       artifacts:
-        baseDirectory: ./dist
+        baseDirectory: dist
         files:
           - '**/*'
       cache:
@@ -26,7 +26,7 @@ resource "aws_amplify_app" "amplify_app" {
   YAML
 
   custom_rule {
-    source = "/<*>"
+    source = "</*>"
     target = "/index.html"
     status = 200
   }
