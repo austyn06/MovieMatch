@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const bucketName = "team-7-tmdb-movie-data";
+  const bucketName = "team-7-tmdb-movie-data-1234";
   const fileName = "movie_data.json";
   const s3Url = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
 
