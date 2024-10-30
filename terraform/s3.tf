@@ -1,13 +1,24 @@
-# resource "random_id" "bucket_suffix" {
-#   byte_length = 4
-# }
+resource "random_id" "bucket_suffix" {
+  byte_length = 4
+}
 
 resource "aws_s3_bucket" "movie_data" {
-  bucket = "team-7-tmdb-movie-data-1234"
+  bucket = "team-7-tmdb-movie-data-${random_id.bucket_suffix.hex}"
+  force_destroy = true
 
   tags = {
     Name = "movie_data"
   }
+}
+
+resource "null_resource" "update_env_file" {
+  provisioner "local-exec" {
+    command = <<EOT
+      echo VITE_S3_BUCKET_NAME=${aws_s3_bucket.movie_data.bucket} > ../.env
+    EOT
+  }
+
+  depends_on = [aws_s3_bucket.movie_data]
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {

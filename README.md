@@ -60,14 +60,3 @@ This project is a movie recommendation app built with React and Terraform.
    ```bash
    terraform destroy -var="github_token=<YOUR_GITHUB_TOKEN>"
    ```
-
-2. After destroying, manually delete the secrets:
-
-   ```bash
-   aws secretsmanager delete-secret --secret-id "YOUR_SECRET" --force-delete-without-recovery
-   ```
-
-   **Secrets to delete**:
-
-   - `tmdb_api_key`
-   - `github_token`

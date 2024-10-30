@@ -12,7 +12,6 @@ resource "aws_lambda_function" "tmdb_fetcher" {
   role          = aws_iam_role.lambda_role.arn
   timeout       = 60
   publish       = true
-  depends_on    = [aws_iam_role_policy_attachment.lambda_policy_attachment]
 
   environment {
     variables = {
@@ -20,6 +19,11 @@ resource "aws_lambda_function" "tmdb_fetcher" {
       MOVIE_DATA_BUCKET = aws_s3_bucket.movie_data.bucket
     }
   }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.lambda_policy_attachment,
+    aws_s3_bucket.movie_data
+  ]
 }
 
 resource "aws_cloudwatch_event_rule" "lambda_schedule" {
