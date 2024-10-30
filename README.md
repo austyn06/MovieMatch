@@ -1,15 +1,73 @@
-# React + Vite
+# Team 7 - Movie Recommendation App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a movie recommendation app built with React and Terraform.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js and npm installed
+- Terraform installed
+- GitHub token (for creating Amplify resources in AWS)
 
-## Run react app locally
+### Run React App Locally
 
-```bash
-npm ci --include=dev
-npm run dev
-```
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/SWEN-514-FALL-2024/term-project-team7.git
+   ```
+
+2. Intall dependencies:
+
+   ```bash
+   npm ci
+   ```
+
+3. Start the app:
+
+   ```bash
+   npm run dev
+   ```
+
+### Deploy with Terraform
+
+1. Navigate to the `terraform` directory:
+
+   ```bash
+   cd terraform
+   ```
+
+2. Initialize Terraform:
+
+   ```bash
+   terraform init
+   ```
+
+3. Review resources that will be created:
+
+   ```bash
+   terraform plan
+   ```
+
+4. Apply the Terraform configuration:
+   ```bash
+   terraform apply -var="github_token=<YOUR_GITHUB_TOKEN>"
+   ```
+
+### Clean Up Resources
+
+1. Run the destroy command in the terraform directory:
+
+   ```bash
+   terraform destroy -var="github_token=<YOUR_GITHUB_TOKEN>"
+   ```
+
+2. After destroying, manually delete the secrets:
+
+   ```bash
+   aws secretsmanager delete-secret --secret-id "YOUR_SECRET" --force-delete-without-recovery
+   ```
+
+   **Secrets to delete**:
+
+   - `tmdb_api_key`
+   - `github_token`

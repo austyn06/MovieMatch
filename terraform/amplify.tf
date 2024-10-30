@@ -12,7 +12,7 @@ resource "aws_amplify_app" "amplify_app" {
       phases:
         preBuild:
           commands:
-            - npm ci --include=dev
+            - npm ci
         build:
           commands:
             - npm run build
