@@ -41,3 +41,15 @@ resource "aws_amplify_branch" "main" {
   branch_name       = var.branch_name
   enable_auto_build = true
 }
+
+resource "null_resource" "trigger_amplify_deployment" {
+  depends_on = [aws_amplify_branch.main]
+
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "aws amplify start-job --app-id ${aws_amplify_app.amplify_app.id} --branch-name ${aws_amplify_branch.main.branch_name} --job-type RELEASE"
+  }
+}
