@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const [movies, setMovies] = useState([]);
 
-  const bucketName = process.env.VITE_S3_BUCKET_NAME;
+  const bucketName = "team-7-tmdb-movie-data-a1b2c3";
   const fileName = "movie_data.json";
   const s3Url = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
 
