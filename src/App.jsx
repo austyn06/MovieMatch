@@ -6,7 +6,8 @@ function App() {
 
   const bucketName = "team-7-tmdb-movie-data-a1b2c3";
   const fileName = "movie_data.json";
-  const s3Url = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
+  const s3StringOriginal = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
+  const s3Url = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`;
 
   useEffect(() => {
     fetch(s3Url)
