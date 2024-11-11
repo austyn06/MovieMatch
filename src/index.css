@@ -1,35 +1,143 @@
-:root {}
-
-body {
+/* General Reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Background and Text Colors */
+body {
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+}
+
+/* Container Styling */
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.movie-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.movie-card {
-  width: 200px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
   text-align: center;
+}
+
+/* Header Styling */
+h1 {
+  font-size: 2.5rem;
+  color: #f72585; /* Bright pink */
+  margin-bottom: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Movie List Styling */
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Movie Card Styling */
+.movie-card {
+  background: linear-gradient(
+    145deg,
+    #3a0ca3,
+    #1a1a2e
+  ); /* Purple and dark gradient */
+  border-radius: 10px;
+  padding: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 20px rgba(245, 37, 133, 0.4); /* Pink shadow */
 }
 
 .movie-poster {
   width: 100%;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .movie-title {
-  font-size: 1.1rem;
-  margin-top: 8px;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  color: #4895ef; /* Bright blue */
+}
+
+/* Movie Detail Styling */
+.movie-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  color: #e0e0e0;
+}
+
+.movie-details img {
+  border-radius: 10px;
+  max-width: 300px;
+}
+
+.movie-details h2 {
+  margin-top: 1rem;
+  color: #4895ef;
+}
+
+.genres-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.genres-list li {
+  display: inline;
+  background-color: #7209b7; /* Deep purple */
+  border-radius: 5px;
+  padding: 0.3rem 0.5rem;
+  margin: 0.3rem;
+  font-size: 0.9rem;
+}
+
+/* Synopsis */
+.synopsis {
+  max-width: 600px;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #f1faee; /* Light, soft text */
+}
+
+/* Button Styling */
+button {
+  background-color: #f72585; /* Bright pink */
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  margin: 0.5rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #b5179e; /* Slightly darker pink */
+}
+
+button:focus {
+  outline: none;
+}
+
+button.liked {
+  background-color: #4895ef; /* Bright blue */
+}
+
+button.liked:hover {
+  background-color: #4361ee; /* Slightly darker blue */
 }
