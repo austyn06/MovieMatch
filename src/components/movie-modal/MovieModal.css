@@ -1,0 +1,137 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 46, 0.85);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #1a1a2e;
+    border-radius: 12px;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    display: flex;
+    box-shadow: 0px 0px 100px 10px rgba(245, 37, 133, 0.4);
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+.modal-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.modal-movie-poster {
+    width: 40%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.modal-movie-details {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-movie-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #f72585;
+}
+
+.modal-movie-meta {
+    font-size: 1rem;
+    color: #a5a5a5;
+    margin-bottom: 10px;
+}
+
+.modal-separator {
+    margin: 0 8px;
+    color: #888888;
+}
+
+.modal-movie-rating {
+    font-size: 1.2rem;
+    color: #4895ef;
+    margin-bottom: 15px;
+}
+
+.modal-movie-synopsis {
+    font-size: 1rem;
+    color: #cfcfcf;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.modal-read-more {
+    background: none;
+    border: none;
+    color: #4895ef;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.modal-read-more:hover {
+    text-decoration: underline;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #f72585;
+    cursor: pointer;
+}
+
+.modal-close-button:hover {
+    color: #ffffff;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal-like-button,
+.modal-dislike-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal-like-button {
+    background-color: #4895ef;
+    color: #ffffff;
+}
+
+.modal-like-button:hover {
+    background-color: #4361ee;
+}
+
+.modal-dislike-button {
+    background-color: #f72585;
+    color: #ffffff;
+}
+
+.modal-dislike-button:hover {
+    background-color: #b5179e;
+}
