@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./components/App.jsx";
 import { SelectGenres } from "./components/select-genres/SelectGenres.jsx";
+import { Login } from "./components/login/login.jsx";
+import { NavBar } from "./components/navbar/NavBar.jsx";
 
 function Main() {
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -22,6 +24,7 @@ function Main() {
             />
           }
         />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );

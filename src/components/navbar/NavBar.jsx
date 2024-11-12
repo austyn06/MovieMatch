@@ -13,6 +13,7 @@ export const NavBar = () => (
       </button>
       <div className="dropdown-content">
         <Link to="/genres">Select Genres</Link>
+        <Link to="/login">Login</Link>
       </div>
     </div>
   </nav>
