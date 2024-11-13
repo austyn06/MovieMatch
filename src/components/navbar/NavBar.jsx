@@ -12,8 +12,8 @@ export const NavBar = () => (
         <span className="hamburger-icon">&#9776;</span>
       </button>
       <div className="dropdown-content">
-        <Link to="/genres">Select Genres</Link>
         <Link to="/login">Login</Link>
+        <Link to="/genres">Select Genres</Link>
       </div>
     </div>
   </nav>
