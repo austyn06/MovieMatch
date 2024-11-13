@@ -21,8 +21,7 @@ resource "aws_lambda_function" "tmdb_fetcher" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.lambda_policy_attachment,
-    aws_s3_bucket.movie_data
+    aws_iam_role_policy_attachment.lambda_policy_attachment
   ]
 }
 

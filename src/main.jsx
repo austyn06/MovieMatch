@@ -1,10 +1,37 @@
+import React, { useState } from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
-import App from "./App.jsx";
+import App from "./components/App.jsx";
+import { SelectGenres } from "./components/select-genres/SelectGenres.jsx";
+import { Login } from "./components/login/login.jsx";
+import { NavBar } from "./components/navbar/NavBar.jsx";
+
+function Main() {
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<App selectedGenres={selectedGenres} />} />
+        <Route
+          path="/genres"
+          element={
+            <SelectGenres
+              selectedGenres={selectedGenres}
+              setSelectedGenres={setSelectedGenres}
+            />
+          }
+        />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
+  );
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <Main />
   </StrictMode>
 );

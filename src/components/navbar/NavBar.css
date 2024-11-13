@@ -1,0 +1,62 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #16213e;
+    position: sticky;
+}
+
+.navbar-title a {
+    color: #f72585;
+    text-decoration: none;
+    font-size: 1.8rem;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: #e0e0e0;
+    padding-right: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger-icon {
+    font-size: 1.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #1a1a2e;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(245, 37, 133, 0.4);
+    border-radius: 5px;
+}
+
+.dropdown-content a {
+    color: #e0e0e0;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f72585;
+    border-radius: 5px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    color: #f72585;
+}
