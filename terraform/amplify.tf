@@ -29,6 +29,9 @@ resource "aws_amplify_app" "amplify_app" {
           VITE_AMPLIFY_APP_URL: $AMPLIFY_APP_URL
           VITE_API_GATEWAY_URL: $API_GATEWAY_URL
           VITE_TMDB_API_KEY: $TMDB_API_KEY
+          VITE_USER_POOL_ID: $USER_POOL_ID
+          VITE_USER_POOL_CLIENT_ID: $USER_POOL_CLIENT_ID
+          VITE_COGNITO_DOMAIN: $COGNITO_DOMAIN
   YAML
 
   custom_rule {
@@ -39,9 +42,9 @@ resource "aws_amplify_app" "amplify_app" {
 
   environment_variables = {
     VITE_AWS_REGION = var.aws_region
-    # VITE_USER_POOL_ID        = aws_cognito_user_pool.user_pool.id
-    # VITE_USER_POOL_CLIENT_ID = aws_cognito_user_pool_client.user_pool_client.id
-    # VITE_COGNITO_DOMAIN      = var.cognito_domain
+    VITE_USER_POOL_ID        = aws_cognito_user_pool.user_pool.id
+    VITE_USER_POOL_CLIENT_ID = aws_cognito_user_pool_client.app_client.id
+    VITE_COGNITO_DOMAIN      = aws_cognito_user_pool_domain.user_pool_domain.domain
     VITE_AMPLIFY_APP_URL = local.amplify_app_url
     VITE_API_GATEWAY_URL = aws_api_gateway_deployment.deployment.invoke_url
     VITE_TMDB_API_KEY    = var.tmdb_api_key
