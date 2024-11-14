@@ -30,6 +30,7 @@ resource "aws_neptune_cluster" "neptune_cluster" {
   apply_immediately               = true
   vpc_security_group_ids          = [aws_security_group.neptune_security_group.id]
   neptune_cluster_parameter_group_name = "${aws_neptune_cluster_parameter_group.neptune1.name}"
+  skip_final_snapshot = true
 }
 
 resource "aws_neptune_cluster_instance" "neptune_instance" {
