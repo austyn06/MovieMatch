@@ -13,8 +13,17 @@ resource "aws_amplify_app" "amplify_app" {
         preBuild:
           commands:
             - npm ci
+            - printenv | grep VITE_
         build:
           commands:
+            - echo "VITE_TMDB_API_KEY=$VITE_TMDB_API_KEY" >> .env
+            - echo "VITE_AWS_REGION=$VITE_AWS_REGION" >> .env
+            - echo "VITE_USER_POOL_ID=$VITE_USER_POOL_ID" >> .env
+            - echo "VITE_USER_POOL_CLIENT_ID=$VITE_USER_POOL_CLIENT_ID" >> .env
+            - echo "VITE_COGNITO_DOMAIN=$VITE_COGNITO_DOMAIN" >> .env
+            - echo "VITE_AMPLIFY_APP_URL=$VITE_AMPLIFY_APP_URL" >> .env
+            - echo "VITE_API_GATEWAY_URL=$VITE_API_GATEWAY_URL" >> .env
+            - cat .env
             - npm run build
       artifacts:
         baseDirectory: dist
