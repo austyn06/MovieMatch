@@ -38,8 +38,8 @@ resource "aws_cognito_user_pool_client" "app_client" {
   # Enable sign-in and sign-up flows
   allowed_oauth_flows                   = ["code"]
   allowed_oauth_scopes                  = ["email", "openid", "profile"]
-  callback_urls                         = ["http://localhost:5173/"]
-  logout_urls                           = ["http://localhost:5173/"]
+  callback_urls                         = ["https://${aws_amplify_app.amplify_app.id}.amplifyapp.com/"]
+  logout_urls                           = ["https://${aws_amplify_app.amplify_app.id}.amplifyapp.com/"]
 
   # Enable authorization code grant flow for authentication
   allowed_oauth_flows_user_pool_client  = true
@@ -50,16 +50,4 @@ resource "aws_cognito_user_pool_client" "app_client" {
 resource "aws_cognito_user_pool_domain" "user_pool_domain" {
   domain       = "swenteam7domain" 
   user_pool_id = aws_cognito_user_pool.user_pool.id
-}
-
-output "user_pool_id" {
-  value = aws_cognito_user_pool.user_pool.id
-}
-
-output "user_pool_client_id" {
-  value = aws_cognito_user_pool_client.app_client.id
-}
-
-output "user_pool_domain" {
-  value = aws_cognito_user_pool_domain.user_pool_domain.domain
 }
