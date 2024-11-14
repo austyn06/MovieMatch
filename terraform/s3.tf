@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "movie_data" {
-  bucket = "team-7-tmdb-movie-data"
+  bucket = "team-7-tmdb-movie-data-abc123"
   force_destroy = true
 
   tags = {
