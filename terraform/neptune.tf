@@ -11,39 +11,35 @@ resource "aws_neptune_subnet_group" "neptune_subnet_group" {
   subnet_ids = data.aws_subnet_ids.default_subnets.ids
 }
 
-resource "aws_neptune_cluster_parameter_group" "neptune1" {
+resource "aws_neptune_cluster_parameter_group" "neptune_cluster_pg" {
+  name        = "neptune-cluster-parameter-group"
   family      = "neptune1.3"
-  name        = "neptune1"
-  description = "neptune cluster parameter group"
+  description = "Neptune cluster parameter group"
 
   parameter {
-    name  = "neptune_enable_audit_log"
-    value = 1
+    name         = "neptune_enable_audit_log"
+    value        = "1"
     apply_method = "pending-reboot"
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }
 
-resource "aws_neptune_cluster" "neptune_cluster" {
-  cluster_identifier              = "movie-recommendation-neptune-cluster"
-  engine                          = "neptune"
-  iam_database_authentication_enabled = true 
-  apply_immediately               = true
-  vpc_security_group_ids          = [aws_security_group.neptune_security_group.id]
-  neptune_cluster_parameter_group_name = "${aws_neptune_cluster_parameter_group.neptune1.name}"
-  skip_final_snapshot = true
-}
+resource "aws_neptune_parameter_group" "neptune_instance_pg" {
+  name        = "neptune-instance-parameter-group"
+  family      = "neptune1.3"
+  description = "Neptune instance parameter group"
 
-resource "aws_neptune_cluster_instance" "neptune_instance" {
-  count              = 1
-  identifier         = "neptune-instance"
-  instance_class     = "db.t3.medium"
-  cluster_identifier = aws_neptune_cluster.neptune_cluster.id
-  apply_immediately  = true
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_security_group" "neptune_security_group" {
   name        = "neptune-security-group"
-  description = "Allow Lambda access to Neptune"
+  description = "Allow access to Neptune from Lambda"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
@@ -59,4 +55,37 @@ resource "aws_security_group" "neptune_security_group" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+resource "aws_neptune_cluster" "neptune_cluster" {
+  cluster_identifier                   = "movie-recommendation-neptune-cluster"
+  engine                               = "neptune"
+  iam_database_authentication_enabled  = true
+  apply_immediately                    = true
+  vpc_security_group_ids               = [aws_security_group.neptune_security_group.id]
+  neptune_subnet_group_name            = aws_neptune_subnet_group.neptune_subnet_group.name
+  neptune_cluster_parameter_group_name = aws_neptune_cluster_parameter_group.neptune_cluster_pg.name
+  skip_final_snapshot                  = true
+
+  depends_on = [
+    aws_neptune_cluster_parameter_group.neptune_cluster_pg,
+    aws_neptune_subnet_group.neptune_subnet_group
+  ]
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
+
+resource "aws_neptune_cluster_instance" "neptune_instance" {
+  count                        = 1
+  identifier                   = "neptune-instance"
+  instance_class               = "db.t3.medium"
+  cluster_identifier           = aws_neptune_cluster.neptune_cluster.id
+  apply_immediately            = true
+  neptune_parameter_group_name = aws_neptune_parameter_group.neptune_instance_pg.name
+
+  depends_on = [
+    aws_neptune_parameter_group.neptune_instance_pg
+  ]
 }
