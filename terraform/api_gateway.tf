@@ -11,7 +11,6 @@ resource "aws_api_gateway_deployment" "deployment" {
   ]
 }
 
-# Need to create a cognito user pool
 resource "aws_api_gateway_authorizer" "cognito_authorizer" {
   name            = "cognito-authorizer"
   rest_api_id     = aws_api_gateway_rest_api.movie_api.id
