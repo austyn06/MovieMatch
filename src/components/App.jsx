@@ -5,7 +5,7 @@ import { NavBar } from "./navbar/NavBar";
 import genres from "./genres";
 
 function App({ selectedGenres }) {
-  // const bucketName = "team-7-tmdb-movie-data-a1b2c3";
+  // const bucketName = "team-7-tmdb-movie-data";
   // const fileName = "movie_data.json";
   // const s3StringOriginal = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
   const [movies, setMovies] = useState([]);
@@ -13,7 +13,7 @@ function App({ selectedGenres }) {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const apiKey = "805e414f9ae84a75b0cf3d95476e199a";
+      const apiKey = import.meta.env.VITE_APP_API_KEY;
       let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`; // Show popular movies by default
       
       // If genres are selected, fetch movies based on selected genres

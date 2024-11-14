@@ -1,68 +1,37 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { NavBar } from '../navbar/NavBar';
+// import { Amplify} from 'aws-amplify';
+// import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
+// import '@aws-amplify/ui-react/styles.css';
 import "./login.css";
+// import awsConfig from '../../aws-exports';
+
+// Amplify.configure(awsConfig);
 
 export const Login = () => {
-    const [buttonText, setButtonText] = useState("Don't have an Account?");
-    const [showSignUpForm, setShowSignUpForm] = useState(false);
-
-    const handleLogin = () => {
-        //implementation for login
-    }
-
-    const handleSignUp = () => {
-        //implementation for signup
-    }
-
-    const buttonClick = () => {
-        setShowSignUpForm(!showSignUpForm);
-        if (buttonText === "Don't have an Account?") {
-            setButtonText("Log In?");
-        } else {
-            setButtonText("Don't have an Account?");
-        }
-    }
+    // const { signOut, user } = useAuthenticator(context => [context.user]);
 
     return (
-        <>
-            <NavBar />
-            {showSignUpForm ? 
-            <>
-                <form id="signupForm"
-                name="signupForm"
-                onSubmit={handleSignUp()}
-                className="mainForm"
-                >
-                    <label className="inputLabel" htmlFor="username">Username: </label>
-                    <input id="user" type="text" name="username" placeholder="username" />
-                    <label className="inputLabel" htmlFor="pass">Password: </label>
-                    <input id="pass" type="password" name="pass" placeholder="password" />
-                    <label className="inputLabel" htmlFor="pass">Retype Password: </label>
-                    <input id="pass2" type="password" name="pass2" placeholder="password" />
-                    <div className="buttonContainer">
-                        <input className="submitButton" type="submit" value="Sign up" />
-                        <button className="submitButton" id="switchButton" onClick={buttonClick}>{buttonText}</button>
-                    </div>
-                </form>
-            </>
-            :
-            <>
-                <form id="loginForm"
-                name="loginForm"
-                onSubmit={handleLogin()}
-                className="mainForm"
-                >
-                    <label className="inputLabel">Username: </label>
-                    <input id="user" type="text" name="username" placeholder="username"/>
-                    <label className="inputLabel">Password: </label>
-                    <input id="pass" type="password" name="pass" placeholder="password"/>
-                    <div className="buttonContainer">
-                        <input className="submitButton" type="submit" value="Sign In" />
-                        <button className="submitButton" id="switchButton" onClick={buttonClick}>{buttonText}</button>
-                    </div>
-                </form>
-            </>
-            }
-        </>
-    )
-}
+        // <Authenticator>
+        //     {({ signOut, user }) => (
+        //         <>
+        //             <NavBar />
+        //             <div className="login-container">
+        //                 {user ? (
+        //                     <div>
+        //                         <h3>Welcome, {user.username}</h3>
+        //                         <button onClick={signOut}>Sign Out</button>
+        //                     </div>
+        //                 ) : (
+        //                     <div>
+        //                         <h3>Please sign in to access your account</h3>
+        //                         <Authenticator.SignIn />
+        //                     </div>
+        //                 )}
+        //             </div>
+        //         </>
+        //     )}
+        // </Authenticator>
+        <div><NavBar /></div>
+    );
+};
