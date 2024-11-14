@@ -21,20 +21,12 @@ resource "aws_neptune_cluster_parameter_group" "neptune_cluster_pg" {
     value        = "1"
     apply_method = "pending-reboot"
   }
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "aws_neptune_parameter_group" "neptune_instance_pg" {
   name        = "neptune-instance-parameter-group"
   family      = "neptune1.3"
   description = "Neptune instance parameter group"
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "aws_security_group" "neptune_security_group" {
@@ -71,10 +63,6 @@ resource "aws_neptune_cluster" "neptune_cluster" {
     aws_neptune_cluster_parameter_group.neptune_cluster_pg,
     aws_neptune_subnet_group.neptune_subnet_group
   ]
-
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 resource "aws_neptune_cluster_instance" "neptune_instance" {
