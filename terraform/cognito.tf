@@ -19,7 +19,7 @@ resource "aws_cognito_user_pool" "user_pool" {
   # Verification message templates
   email_verification_message = "Your verification code is {####}"
   email_verification_subject = "Please Verify Your Email"
-  
+
   # Account recovery settings
   account_recovery_setting {
     recovery_mechanism {
@@ -31,23 +31,24 @@ resource "aws_cognito_user_pool" "user_pool" {
 
 # Cognito User Pool Client
 resource "aws_cognito_user_pool_client" "app_client" {
+  depends_on      = [aws_amplify_branch.main, aws_amplify_app.amplify_app]
   name            = "example-app-client"
   user_pool_id    = aws_cognito_user_pool.user_pool.id
   generate_secret = false
 
   # Enable sign-in and sign-up flows
-  allowed_oauth_flows                   = ["code"]
-  allowed_oauth_scopes                  = ["email", "openid", "profile"]
-  callback_urls                         = ["https://${aws_amplify_app.amplify_app.id}.amplifyapp.com/"]
-  logout_urls                           = ["https://${aws_amplify_app.amplify_app.id}.amplifyapp.com/"]
+  allowed_oauth_flows  = ["code"]
+  allowed_oauth_scopes = ["email", "openid", "profile"]
+  callback_urls        = ["https://${aws_amplify_branch.main.branch_name}.${aws_amplify_app.amplify_app.default_domain}/"]
+  logout_urls          = ["https://${aws_amplify_branch.main.branch_name}.${aws_amplify_app.amplify_app.default_domain}/"]
 
   # Enable authorization code grant flow for authentication
-  allowed_oauth_flows_user_pool_client  = true
-  supported_identity_providers          = ["COGNITO"]
+  allowed_oauth_flows_user_pool_client = true
+  supported_identity_providers         = ["COGNITO"]
 }
 
 # Cognito User Pool Domain
 resource "aws_cognito_user_pool_domain" "user_pool_domain" {
-  domain       = "swenteam7domain" 
+  domain       = "swenteam7domain"
   user_pool_id = aws_cognito_user_pool.user_pool.id
 }
