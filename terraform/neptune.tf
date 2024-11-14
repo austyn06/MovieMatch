@@ -38,7 +38,6 @@ resource "aws_neptune_cluster_instance" "neptune_instance" {
   instance_class     = "db.t3.medium"
   cluster_identifier = aws_neptune_cluster.neptune_cluster.id
   apply_immediately  = true
-  neptune_cluster_parameter_group_name = "${aws_neptune_cluster_parameter_group.neptune1.name}"
 }
 
 resource "aws_security_group" "neptune_security_group" {
