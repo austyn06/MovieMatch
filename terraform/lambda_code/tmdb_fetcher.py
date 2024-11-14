@@ -3,6 +3,7 @@ import boto3
 import os
 import urllib.request
 from urllib.error import URLError, HTTPError
+from gremlin_python.driver import client, serializer
 
 api_key_cache = None
 
@@ -14,6 +15,12 @@ def lambda_handler(event, context):
     
     secret_name = os.environ["TMDB_SECRET_NAME"]
     bucket_name = os.environ["MOVIE_DATA_BUCKET"]
+    neptune_endpoint = os.environ["NEPTUNE_ENDPOINT"]
+
+    neptune_client = client.Client(
+        f"wss://{neptune_endpoint}:8182/gremlin", 'g',
+        message_serializer=serializer.GraphSONSerializersV2d0()
+    )
     
     if not api_key_cache:
         try:
@@ -48,4 +55,27 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f"Error uploading data to S3: {e}")
         return {"statusCode": 500, "body": "Error uploading data to S3"}
+    
+    try:
+        for movie in movie_data:
+            title = movie['title']
+            movie_id = movie['id']
+            genres = movie['genre_ids']
+            
+            neptune_client.submit(
+                f"g.addV('Movie').property('title', '{title}').property('id', '{movie_id}')"
+            )
+
+            for genre_id in genres:
+                neptune_client.submit(
+                    f"g.V().has('Genre', 'id', '{genre_id}').fold().coalesce(unfold(), addV('Genre').property('id', '{genre_id}'))"
+                )
+                neptune_client.submit(
+                    f"g.V().has('Movie', 'id', '{movie_id}').addE('BELONGS_TO').to(g.V().has('Genre', 'id', '{genre_id}'))"
+                )
+        print("Movies and genres stored in Neptune successfully.")
+    except Exception as e:
+        print(f"Error storing data in Neptune: {e}")
+        return {"statusCode": 500, "body": "Error storing data in Neptune"}
+    
     return {"statusCode": 200, "body": "Movie data stored in S3 successfully"}

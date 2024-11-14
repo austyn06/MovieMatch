@@ -39,6 +39,11 @@ resource "aws_iam_policy" "lambda_policy" {
         Effect   = "Allow",
         Action   = ["s3:PutObject", "s3:PutObjectAcl"],
         Resource = "${aws_s3_bucket.movie_data.arn}/*"
+      },
+      {
+        Effect = "Allow",
+        Action = [ "neptune-db:connect"],
+        Resource = "*"
       }
     ]
   })
