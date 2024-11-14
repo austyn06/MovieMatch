@@ -4,12 +4,9 @@ import { Amplify} from 'aws-amplify';
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import "./login.css";
+import awsConfig from '../../aws-exports';
 
-Amplify.configure({
-        region: 'us-east-1',
-        userPoolId: 'us-east-1_fNBa2g3Gs', 
-        userPoolWebClientId: '10gn06qn308vmrse43j6obkrts', 
-});
+Amplify.configure(awsConfig);
 
 export const Login = () => {
     // const { signOut, user } = useAuthenticator(context => [context.user]);
