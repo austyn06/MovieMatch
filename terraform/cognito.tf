@@ -1,10 +1,14 @@
+resource "random_string" "suffix" {
+  length  = 6
+  upper   = false
+  lower   = true
+  number  = true
+  special = false
+}
 
-
-# Cognito User Pool
 resource "aws_cognito_user_pool" "user_pool" {
-  name = "example-user-pool"
+  name = "example-user-pool-${random_string.suffix.result}"
 
-  # Policies for password requirements
   password_policy {
     minimum_length    = 8
     require_lowercase = true
@@ -13,14 +17,11 @@ resource "aws_cognito_user_pool" "user_pool" {
     require_uppercase = true
   }
 
-  # Optional email configuration
   auto_verified_attributes = ["email"]
 
-  # Verification message templates
   email_verification_message = "Your verification code is {####}"
   email_verification_subject = "Please Verify Your Email"
 
-  # Account recovery settings
   account_recovery_setting {
     recovery_mechanism {
       name     = "verified_email"
@@ -29,25 +30,21 @@ resource "aws_cognito_user_pool" "user_pool" {
   }
 }
 
-# Cognito User Pool Client
 resource "aws_cognito_user_pool_client" "app_client" {
-  name            = "example-app-client"
+  name            = "example-app-client-${random_string.suffix.result}"
   user_pool_id    = aws_cognito_user_pool.user_pool.id
   generate_secret = false
 
-  # Enable sign-in and sign-up flows
   allowed_oauth_flows  = ["code"]
   allowed_oauth_scopes = ["email", "openid", "profile"]
   callback_urls        = [local.amplify_app_url]
   logout_urls          = [local.amplify_app_url]
 
-  # Enable authorization code grant flow for authentication
   allowed_oauth_flows_user_pool_client = true
   supported_identity_providers         = ["COGNITO"]
 }
 
-# Cognito User Pool Domain
 resource "aws_cognito_user_pool_domain" "user_pool_domain" {
-  domain       = "swenteam7domain"
+  domain       = "swenteam7domain-${random_string.suffix.result}"
   user_pool_id = aws_cognito_user_pool.user_pool.id
 }
