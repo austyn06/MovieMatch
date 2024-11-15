@@ -1,5 +1,9 @@
+resource "random_id" "bucket_suffix" {
+  byte_length = 4
+}
+
 resource "aws_s3_bucket" "movie_data" {
-  bucket = "team-7-tmdb-movie-data"
+  bucket = "team-7-tmdb-movie-data-${random_id.bucket_suffix.hex}"
   force_destroy = true
 
   tags = {
