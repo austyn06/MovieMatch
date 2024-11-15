@@ -19,12 +19,13 @@ export const MovieModal = ({ movie, genres, closeModal }) => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleLikeDislike = (isLiked) => {
+    // Implement the logic to like or dislike the movie
+  }
+
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        {/* <button className="modal-close-button" onClick={closeModal}>
-          &times;
-        </button> */}
         <div className="modal-body">
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -54,8 +55,8 @@ export const MovieModal = ({ movie, genres, closeModal }) => {
               )}
             </p>
             <div className="modal-actions">
-              <button className="modal-like-button">Liked</button>
-              <button className="modal-dislike-button">Disliked</button>
+              <button className="modal-like-button" onClick={() => handleLikeDislike(true)}>Liked</button>
+              <button className="modal-dislike-button" onClick={() => handleLikeDislike(false)}>Disliked</button>
             </div>
           </div>
         </div>

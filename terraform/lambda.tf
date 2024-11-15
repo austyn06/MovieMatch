@@ -15,8 +15,6 @@ resource "aws_lambda_function" "tmdb_fetcher" {
 
   environment {
     variables = {
-      TMDB_SECRET_NAME  = aws_secretsmanager_secret.tmdb_api_key.name
-      MOVIE_DATA_BUCKET = aws_s3_bucket.movie_data.bucket
       NEPTUNE_ENDPOINT  = aws_neptune_cluster.neptune_cluster.endpoint
     }
   }

@@ -6,7 +6,10 @@ import "./index.css";
 import App from "./components/App.jsx";
 import { SelectGenres } from "./components/select-genres/SelectGenres.jsx";
 import { Login } from "./components/login/login.jsx";
-import { NavBar } from "./components/navbar/NavBar.jsx";
+import Amplify from "aws-amplify";
+import awsConfig from "./amplifyConfig";
+
+Amplify.configure(awsConfig);
 
 function Main() {
   const [selectedGenres, setSelectedGenres] = useState([]);
