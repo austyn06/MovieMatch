@@ -6,7 +6,7 @@ import "./index.css";
 import App from "./components/App.jsx";
 import { SelectGenres } from "./components/select-genres/SelectGenres.jsx";
 import { Login } from "./components/login/login.jsx";
-import Amplify from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import awsConfig from "./amplifyConfig";
 
 Amplify.configure(awsConfig);

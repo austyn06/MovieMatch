@@ -13,7 +13,7 @@ function App({ selectedGenres }) {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const apiKey = import.meta.env.VITE_APP_API_KEY;
+      const apiKey = import.meta.env.VITE_TMDB_API_KEY;
       let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`; // Show popular movies by default
       
       // If genres are selected, fetch movies based on selected genres
