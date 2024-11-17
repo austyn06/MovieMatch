@@ -13,7 +13,6 @@ resource "aws_amplify_app" "amplify_app" {
         preBuild:
           commands:
             - npm ci
-            - printenv | grep VITE_
         build:
           commands:
             - npm run build

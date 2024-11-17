@@ -3,29 +3,26 @@ import { MovieList } from "./movie-list/MovieList";
 import { MovieModal } from "./movie-modal/MovieModal";
 import { NavBar } from "./navbar/NavBar";
 import genres from "./genres";
+import { API } from "aws-amplify";
 
 function App({ selectedGenres }) {
-  // const bucketName = "team-7-tmdb-movie-data";
-  // const fileName = "movie_data.json";
-  // const s3StringOriginal = `https://${bucketName}.s3.amazonaws.com/${fileName}`;
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const apiKey = import.meta.env.VITE_TMDB_API_KEY;
-      let url = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`; // Show popular movies by default
-      
-      // If genres are selected, fetch movies based on selected genres
-      if (selectedGenres.length > 0) {
-        const genreIds = selectedGenres.map((g) => g.id).join(",");
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreIds}`;
+      try {
+        let queryString = "";
+        if (selectedGenres.length > 0) {
+          const genreIds = selectedGenres.map((g) => g.id).join(",");
+          queryString = `?genres=${genreIds}`;
+        }
+
+        const data = await API.get("MovieAPI", queryString);
+        setMovies(data.results);
+      } catch (err) {
+        console.log("Error fetching movies:", err);
       }
-      
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => setMovies(data.results))
-        .catch((error) => console.log("Error fetching movie data:", error));
     };
 
     fetchMovies();

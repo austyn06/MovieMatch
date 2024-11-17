@@ -17,8 +17,9 @@ const awsconfig = {
     endpoints: [
       {
         name: "MovieAPI",
-        endpoint: import.meta.env.VITE_API_GATEWAY_URL,
-      },
+        endpoint: `${import.meta.env.VITE_API_GATEWAY_URL}/movies`,
+        region: import.meta.env.VITE_AWS_REGION,
+      }
     ],
   },
 };

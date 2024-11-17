@@ -5,10 +5,10 @@ import urllib.request
 from urllib.error import URLError, HTTPError
 from gremlin_python.driver import client, serializer
 
-api_key_cache = None
+api_key = None
 
 def lambda_handler(event, context):
-    global api_key_cache
+    global api_key
     
     secrets_client = boto3.client(service_name="secretsmanager", region_name="us-east-1")
     s3_client = boto3.client(service_name="s3", region_name="us-east-1")
@@ -22,21 +22,33 @@ def lambda_handler(event, context):
         message_serializer=serializer.GraphSONSerializersV2d0()
     )
     
-    if not api_key_cache:
+    if not api_key:
         try:
             response = secrets_client.get_secret_value(SecretId=secret_name)
             secret_string = response["SecretString"]
             try:
-                api_key_cache = json.loads(secret_string)["tmdb_api_key"]
+                api_key = json.loads(secret_string)["tmdb_api_key"]
             except json.JSONDecodeError:
-                api_key_cache = secret_string
+                api_key = secret_string
         except Exception as e:
             print(f"Error fetching secret: {e}")
             return {"statusCode": 500, "body": "Error fetching API key from Secrets Manager"}
     else:
         print("Using cached API key")
 
-    url = f"https://api.themoviedb.org/3/movie/popular?api_key={api_key_cache}"
+    
+    genres = []
+    if 'queryStringParameters' in event and event['queryStringParameters']:
+        genres_param = event['queryStringParameters'].get('genres', '')
+        if genres_param:
+            genres = genres_param.split(',')
+
+    if genres:
+        genre_ids = ','.join(genres)
+        url = f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={genre_ids}"
+    else:
+        url = f"https://api.themoviedb.org/3/movie/popular?api_key={api_key}"
+
     try:
         with urllib.request.urlopen(url) as response:
             movie_data = json.loads(response.read())
