@@ -1,4 +1,4 @@
-import { Amplify } from 'aws-amplify';
+import { Amplify, API } from "aws-amplify";
 
 const awsconfig = {
   // Auth: {
@@ -17,13 +17,14 @@ const awsconfig = {
     endpoints: [
       {
         name: "MovieAPI",
-        endpoint: `${import.meta.env.VITE_API_GATEWAY_URL}/movies`,
+        endpoint: import.meta.env.VITE_API_GATEWAY_URL,
         region: import.meta.env.VITE_AWS_REGION,
-      }
+      },
     ],
   },
 };
 
 Amplify.configure(awsconfig);
+API.configure(awsconfig);
 
 export default awsconfig;

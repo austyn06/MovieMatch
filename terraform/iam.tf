@@ -24,7 +24,7 @@ resource "aws_iam_policy" "lambda_policy" {
       {
         Effect   = "Allow",
         Action   = "secretsmanager:GetSecretValue",
-        Resource = aws_secretsmanager_secret.tmdb_api_key.arn
+        Resource = "*"
       },
       {
         Effect = "Allow",

@@ -1,7 +1,7 @@
 import React from "react";
 import "./MovieList.css";
 
-export const MovieList = ({ movies, clickMovie }) => (
+export const MovieList = ({ movies, clickMovie }) => {
   <div className="movie-list">
     {movies.map((movie) => (
       <div
@@ -18,4 +18,4 @@ export const MovieList = ({ movies, clickMovie }) => (
       </div>
     ))}
   </div>
-);
+};

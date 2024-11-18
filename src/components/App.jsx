@@ -12,13 +12,15 @@ function App({ selectedGenres }) {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        let queryString = "";
-        if (selectedGenres.length > 0) {
+        let queryString = {};
+        if (selectedGenres && selectedGenres.length > 0) {
           const genreIds = selectedGenres.map((g) => g.id).join(",");
-          queryString = `?genres=${genreIds}`;
-        }
+          queryString = { genres: genreIds };
+        }       
 
-        const data = await API.get("MovieAPI", queryString);
+        const data = await API.get("MovieAPI", "/movies", { queryStringParameters: queryString });
+
+        console.log("Fetch data:", data.results);
         setMovies(data.results);
       } catch (err) {
         console.log("Error fetching movies:", err);
