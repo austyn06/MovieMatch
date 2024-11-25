@@ -16,8 +16,10 @@ export const NavBar = ({setSearchQuery}) => {
     <h1 className="navbar-title">
       <Link to="/">Movie Recommendation System</Link>
     </h1>
-    <input type="text" value={search} className="search-bar" onChange={e => setSearch(e.target.value)} />
-    <button type="button" onClick={submitSearch}>Search</button>
+    <div className="search">
+      <input type="text" value={search} className="search-bar" onChange={e => setSearch(e.target.value)} />
+      <button className="searchbtn" type="button" onClick={submitSearch}>Search</button>
+    </div>
     <div className="dropdown">
       <button className="dropbtn">
         <span className="hamburger-icon">&#9776;</span>

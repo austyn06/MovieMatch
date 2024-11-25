@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import genres from "../genres";
 import "./SelectGenres.css";
 
-export const SelectGenres = ({ selectedGenres, setSelectedGenres }) => {
+export const SelectGenres = ({ selectedGenres, setSelectedGenres, setSearchQuery }) => {
   const [selectedGenreIds, setSelectedGenreIds] = useState(
     selectedGenres.map((genre) => genre.id)
   );
@@ -20,6 +20,7 @@ export const SelectGenres = ({ selectedGenres, setSelectedGenres }) => {
   const handleSubmit = () => {
     const selected = genres.filter((g) => selectedGenreIds.includes(g.id));
     setSelectedGenres(selected);
+    setSearchQuery("");
     console.log("Selected genres: ", selected);
     navigate("/");
   };

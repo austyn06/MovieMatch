@@ -27,6 +27,7 @@ function Main() {
             <SelectGenres
               selectedGenres={selectedGenres}
               setSelectedGenres={setSelectedGenres}
+              setSearchQuery={setSearchQuery}
             />
           }
         />
