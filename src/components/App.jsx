@@ -5,7 +5,7 @@ import { NavBar } from "./navbar/NavBar";
 import genres from "./genres";
 import { API } from "aws-amplify";
 
-function App({ selectedGenres }) {
+function App({ selectedGenres, searchQuery, setSearchQuery }) {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
@@ -17,6 +17,10 @@ function App({ selectedGenres }) {
           const genreIds = selectedGenres.map((g) => g.id).join(",");
           queryString = { genres: genreIds };
         }       
+        if (searchQuery) {
+          console.log(searchQuery);
+          queryString = { search: searchQuery };
+        }
 
         const data = await API.get("MovieAPI", "/movies", { queryStringParameters: queryString });
 
@@ -28,7 +32,7 @@ function App({ selectedGenres }) {
     };
 
     fetchMovies();
-  }, [selectedGenres]);
+  }, [selectedGenres, searchQuery]);
 
   const clickMovie = (movie) => {
     setSelectedMovie(movie);
@@ -40,7 +44,7 @@ function App({ selectedGenres }) {
 
   return (
     <div className="container">
-      <NavBar />
+      <NavBar setSearchQuery={setSearchQuery}/>
       <MovieList movies={movies} clickMovie={clickMovie} />
       {selectedMovie && (
         <MovieModal
