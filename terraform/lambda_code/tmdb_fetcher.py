@@ -26,14 +26,18 @@ def lambda_handler(event, context):
         }
 
     genres = []
+    search = []
     if "queryStringParameters" in event and event["queryStringParameters"]:
         genres_param = event["queryStringParameters"].get("genres", "")
+        search = event["queryStringParameters"].get("search", "")
         if genres_param:
             genres = genres_param.split(",")
 
     if genres:
         genre_ids = ",".join(genres)
         url = f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&with_genres={genre_ids}"
+    elif search:
+        url = f"https://api.themoviedb.org/3/search/movie?query=${search}&api_key={api_key}"
     else:
         url = f"https://api.themoviedb.org/3/movie/popular?api_key={api_key}"
 

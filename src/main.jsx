@@ -13,17 +13,21 @@ Amplify.configure(awsConfig);
 
 function Main() {
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<App selectedGenres={selectedGenres} />} />
+        <Route path="/" element={<App selectedGenres={selectedGenres} 
+                                      searchQuery={searchQuery}
+                                      setSearchQuery={setSearchQuery}/>} />
         <Route
           path="/genres"
           element={
             <SelectGenres
               selectedGenres={selectedGenres}
               setSelectedGenres={setSelectedGenres}
+              setSearchQuery={setSearchQuery}
             />
           }
         />
