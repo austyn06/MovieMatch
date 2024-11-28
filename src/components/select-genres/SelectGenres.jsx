@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import genres from "../genres";
 import "./SelectGenres.css";
 
-export const SelectGenres = ({ selectedGenres, setSelectedGenres, setSearchQuery }) => {
+export const SelectGenres = ({
+  selectedGenres,
+  setSelectedGenres,
+  setSearchQuery,
+}) => {
   const [selectedGenreIds, setSelectedGenreIds] = useState(
     selectedGenres.map((genre) => genre.id)
   );
@@ -22,7 +26,7 @@ export const SelectGenres = ({ selectedGenres, setSelectedGenres, setSearchQuery
     setSelectedGenres(selected);
     setSearchQuery("");
     console.log("Selected genres: ", selected);
-    navigate("/");
+    navigate("/movies");
   };
 
   return (

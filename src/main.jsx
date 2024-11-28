@@ -18,11 +18,12 @@ function Main() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<App selectedGenres={selectedGenres} 
+        <Route path="/" element={<Login />} />
+        <Route path="/movies" element={<App selectedGenres={selectedGenres} 
                                       searchQuery={searchQuery}
                                       setSearchQuery={setSearchQuery}/>} />
         <Route
-          path="/genres"
+          path="/movie-genres"
           element={
             <SelectGenres
               selectedGenres={selectedGenres}
@@ -31,7 +32,6 @@ function Main() {
             />
           }
         />
-        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
