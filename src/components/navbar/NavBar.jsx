@@ -14,7 +14,7 @@ export const NavBar = ({setSearchQuery}) => {
   return ( 
     <nav className="navbar">
     <h1 className="navbar-title">
-      <Link to="/">Movie Recommendation System</Link>
+      <Link to="/">MovieMatch</Link>
     </h1>
     <div className="search">
       <input type="text" value={search} className="search-bar" onChange={e => setSearch(e.target.value)} />

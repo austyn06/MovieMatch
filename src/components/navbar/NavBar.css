@@ -63,7 +63,6 @@
 
 .search {
     display: flex;
-    align-items: flex-start;
     margin: 0 0 10px 0;
     padding : 4px;
     width: 50%;
@@ -84,6 +83,7 @@
     padding: 15px 25px;
     margin: 10px;
     border-radius: 20px;
+    border: none;
     cursor: pointer;
     background-color: #f72585;
     color: #ffffff;

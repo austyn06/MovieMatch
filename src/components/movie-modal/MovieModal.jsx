@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import genresList from "../genres";
 import "./MovieModal.css";
+import { API } from "aws-amplify";
 
 export const MovieModal = ({ movie, genres, closeModal }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -20,8 +21,11 @@ export const MovieModal = ({ movie, genres, closeModal }) => {
   };
 
   const handleLikeDislike = (isLiked) => {
-    // Implement the logic to like or dislike the movie
-  }
+    API.post("MovieAPI", "/movies", { body: { movieId: movie.id, liked: isLiked } });
+
+    alert(`You ${isLiked ? "liked" : "disliked"} ${movie.title}`);
+    closeModal();
+  };
 
   return (
     <div className="modal-overlay" onClick={closeModal}>
@@ -43,7 +47,9 @@ export const MovieModal = ({ movie, genres, closeModal }) => {
                 {movieGenres.join(" | ")}
               </span>
             </div>
-            <div className="modal-movie-rating">Rating: {movie.vote_average.toFixed(2)} / 10</div>
+            <div className="modal-movie-rating">
+              Rating: {movie.vote_average.toFixed(2)} / 10
+            </div>
             <p className="modal-movie-synopsis">
               {isExpanded
                 ? movie.overview
@@ -55,8 +61,18 @@ export const MovieModal = ({ movie, genres, closeModal }) => {
               )}
             </p>
             <div className="modal-actions">
-              <button className="modal-like-button" onClick={() => handleLikeDislike(true)}>Liked</button>
-              <button className="modal-dislike-button" onClick={() => handleLikeDislike(false)}>Disliked</button>
+              <button
+                className="modal-like-button"
+                onClick={() => handleLikeDislike(true)}
+              >
+                Liked
+              </button>
+              <button
+                className="modal-dislike-button"
+                onClick={() => handleLikeDislike(false)}
+              >
+                Disliked
+              </button>
             </div>
           </div>
         </div>

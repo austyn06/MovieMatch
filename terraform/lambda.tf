@@ -17,7 +17,7 @@ resource "aws_lambda_function" "tmdb_fetcher" {
     variables = {
       TMDB_API_KEY = var.tmdb_api_key
       MOVIE_DATA_BUCKET = aws_s3_bucket.movie_data.bucket
-      NEPTUNE_ENDPOINT  = aws_neptune_cluster.neptune_cluster.endpoint
+      # NEPTUNE_ENDPOINT  = aws_neptune_cluster.neptune_cluster.endpoint
     }
   }
 
