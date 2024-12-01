@@ -17,16 +17,20 @@ resource "aws_cognito_user_pool" "user_pool" {
     require_uppercase = true
   }
 
-  auto_verified_attributes = ["email"]
-
-  email_verification_message = "Your verification code is {####}"
-  email_verification_subject = "Please Verify Your Email"
-
-  account_recovery_setting {
-    recovery_mechanism {
-      name     = "verified_email"
-      priority = 1
-    }
+  mfa_configuration = "OFF"
+  
+  # Disable all verification requirements
+  username_attributes = ["email"]
+  auto_verified_attributes = []
+  
+  # Skip email verification
+  email_configuration {
+    email_sending_account = "COGNITO_DEFAULT"
+  }
+  
+  # Add this to automatically confirm users without verification
+  lambda_config {
+    pre_sign_up = aws_lambda_function.auto_confirm_user.arn
   }
 }
 
@@ -34,6 +38,16 @@ resource "aws_cognito_user_pool_client" "app_client" {
   name            = "example-app-client-${random_string.suffix.result}"
   user_pool_id    = aws_cognito_user_pool.user_pool.id
   generate_secret = false
+
+  # Add these settings to skip verification
+  explicit_auth_flows = [
+    "ALLOW_USER_PASSWORD_AUTH",
+    "ALLOW_REFRESH_TOKEN_AUTH",
+    "ALLOW_USER_SRP_AUTH"
+  ]
+
+   # Disable any verification requirements
+  prevent_user_existence_errors = "ENABLED"
 
   allowed_oauth_flows  = ["code"]
   allowed_oauth_scopes = ["email", "openid", "profile"]
@@ -47,4 +61,13 @@ resource "aws_cognito_user_pool_client" "app_client" {
 resource "aws_cognito_user_pool_domain" "user_pool_domain" {
   domain       = "swenteam7domain-${random_string.suffix.result}"
   user_pool_id = aws_cognito_user_pool.user_pool.id
+}
+
+# Add a Lambda function to auto-confirm users
+resource "aws_lambda_function" "auto_confirm_user" {
+  filename      = "auto_confirm.zip"  # You'll need to create this
+  function_name = "auto-confirm-user"
+  role         = aws_iam_role.cognito_lambda_role.arn
+  handler      = "index.handler"
+  runtime      = "nodejs18.x"
 }
