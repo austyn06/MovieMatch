@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Amplify } from 'aws-amplify';
-import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react';
+import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import "./login.css";
 import awsConfig from '../../aws-exports';
@@ -10,6 +10,17 @@ Amplify.configure(awsConfig);
 
 export const Login = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      if (user) {
+        navigate("/movies");  
+      }
+    };
+
+    checkUser();
+  }, [navigate]);
 
   return (
     <div className="login-page">
