@@ -1,17 +1,29 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faSignOut, faFilm } from "@fortawesome/free-solid-svg-icons";
+import { Auth } from "aws-amplify";
 
 export const NavBar = ({ setSearchQuery }) => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate(); // Hook for navigation
 
   const submitSearch = (e) => {
     e.preventDefault();
     const finalSearch = search.trim().replace(/\s+/g, "+");
     console.log(`search query: ${finalSearch}`);
     setSearchQuery(finalSearch);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut(); // Log out the user
+      console.log("User logged out successfully");
+      navigate("/"); // Redirect to login page
+    } catch (error) {
+      console.error("Error during logout", error);
+    }
   };
 
   return (
@@ -40,10 +52,11 @@ export const NavBar = ({ setSearchQuery }) => {
           <FontAwesomeIcon icon={faFilm} />
           Genres
         </NavLink>
-        <NavLink to="/" className="nav-link" activeClassName="active">
-          <FontAwesomeIcon icon={faSignOut} />
+        {/* Replaced NavLink with button for logout functionality */}
+        <button onClick={handleLogout} className="nav-link" color="transparent">
+          <FontAwesomeIcon onClick={handleLogout} icon={faSignOut} />
           Logout
-        </NavLink>
+        </button>
       </div>
     </nav>
   );
