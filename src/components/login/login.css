@@ -29,3 +29,9 @@
     justify-content: center;
     margin-top: 20px;
   }
+
+  .login-title a {
+    color: #f72585;
+    text-decoration: none;
+    font-size: 1.8rem;
+}

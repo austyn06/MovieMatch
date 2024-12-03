@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Amplify } from 'aws-amplify';
+import { Amplify, Auth } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import "./login.css";
@@ -10,36 +10,59 @@ Amplify.configure(awsConfig);
 
 export const Login = () => {
   const navigate = useNavigate();
+  const [authState, setAuthState] = useState('signIn');
 
   useEffect(() => {
     const checkUser = async () => {
-      const user = await Auth.currentAuthenticatedUser();
-      if (user) {
-        navigate("/movies");  
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        if (user) {
+          navigate("/movies");
+          window.location.reload();
+        }
+      } catch (error) {
+        setAuthState("signIn");
       }
     };
 
     checkUser();
   }, [navigate]);
 
+  const handleAuthStateChange = (nextAuthState) => {
+    if (nextAuthState === 'signedIn') {
+      navigate("/movies");
+      window.location.reload();
+    }
+    setAuthState(nextAuthState);
+  };
+
   return (
     <div className="login-page">
-      <Authenticator>
+      <Authenticator 
+        onStateChange={handleAuthStateChange}
+        authState={authState}
+      >
         {({ signOut, user }) => (
-          <div className="login-container">
-            {user ? (
-              <div>
-                <h3>Welcome, {user.username}</h3>
-                <button onClick={signOut}>Sign Out</button>
-              </div>
-            ) : (
-              <div>
-                <h3>Please sign in to access your account</h3>
-              </div>
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <h1 className="login-title">Welcome to MovieMatch!</h1>
+            {user && (
+              <button
+                onClick={() => {
+                  navigate('/movies');
+                }}
+                style={{
+                  padding: '10px 20px',
+                  backgroundColor: '#007bff',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontSize: '16px'
+                }}
+              >
+                Go to Movies
+              </button>
             )}
-            <div className="center">
-              <h1>Login Page</h1>
-            </div>
           </div>
         )}
       </Authenticator>
