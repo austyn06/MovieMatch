@@ -54,7 +54,7 @@ export const NavBar = ({ setSearchQuery }) => {
           Genres
         </NavLink>
         {/* Replaced NavLink with button for logout functionality */}
-        <button onClick={handleLogout} className="nav-link" color="transparent">
+        <button onClick={handleLogout} className="nav-link">
           <FontAwesomeIcon onClick={handleLogout} icon={faSignOut} />
           Logout
         </button>
