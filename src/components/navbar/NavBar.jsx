@@ -21,6 +21,7 @@ export const NavBar = ({ setSearchQuery }) => {
       await Auth.signOut(); // Log out the user
       console.log("User logged out successfully");
       navigate("/"); // Redirect to login page
+      window.location.reload();
     } catch (error) {
       console.error("Error during logout", error);
     }
@@ -47,7 +48,7 @@ export const NavBar = ({ setSearchQuery }) => {
         <NavLink
           to="/movie-genres"
           className="nav-link"
-          activeClassName="active"
+          activeclassname="active"
         >
           <FontAwesomeIcon icon={faFilm} />
           Genres
