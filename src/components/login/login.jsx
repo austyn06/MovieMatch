@@ -46,22 +46,13 @@ export const Login = () => {
           <div style={{ textAlign: 'center', marginTop: '20px' }}>
             <h1 className="login-title">Welcome to MovieMatch!</h1>
             {user && (
-              <button
+              <div className="movies-button"
                 onClick={() => {
                   navigate('/movies');
                 }}
-                style={{
-                  padding: '10px 20px',
-                  backgroundColor: '#007bff',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '16px'
-                }}
               >
                 Go to Movies
-              </button>
+              </div>
             )}
           </div>
         )}
