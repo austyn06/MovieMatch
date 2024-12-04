@@ -1,34 +1,64 @@
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./NavBar.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faSignOut, faFilm } from "@fortawesome/free-solid-svg-icons";
+import { Auth } from "aws-amplify";
 
-export const NavBar = ({setSearchQuery}) => {
-  const [search, setSearch] = useState('');
+export const NavBar = ({ setSearchQuery }) => {
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate(); // Hook for navigation
 
-  const submitSearch = () => {
-    let finalSearch = search.replace(" ", "+");
+  const submitSearch = (e) => {
+    e.preventDefault();
+    const finalSearch = search.trim().replace(/\s+/g, "+");
     console.log(`search query: ${finalSearch}`);
     setSearchQuery(finalSearch);
-  }
+  };
 
-  return ( 
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut(); // Log out the user
+      console.log("User logged out successfully");
+      navigate("/"); // Redirect to login page
+      window.location.reload();
+    } catch (error) {
+      console.error("Error during logout", error);
+    }
+  };
+
+  return (
     <nav className="navbar">
-    <h1 className="navbar-title">
-      <Link to="/">Movie Recommendation System</Link>
-    </h1>
-    <div className="search">
-      <input type="text" value={search} className="search-bar" onChange={e => setSearch(e.target.value)} />
-      <button className="searchbtn" type="button" onClick={submitSearch}>Search</button>
-    </div>
-    <div className="dropdown">
-      <button className="dropbtn">
-        <span className="hamburger-icon">&#9776;</span>
-      </button>
-      <div className="dropdown-content">
-        <Link to="/login">Login</Link>
-        <Link to="/genres">Select Genres</Link>
+      <h1 className="navbar-title">
+        <NavLink to="/movies">MovieMatch</NavLink>
+      </h1>
+      <form className="search-container" onSubmit={submitSearch}>
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button type="submit" className="search-button">
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        </button>
+      </form>
+      <div className="nav-links">
+        <NavLink
+          to="/movie-genres"
+          className="nav-link"
+          activeclassname="active"
+        >
+          <FontAwesomeIcon icon={faFilm} />
+          Genres
+        </NavLink>
+        {/* Replaced NavLink with button for logout functionality */}
+        <button onClick={handleLogout} className="nav-link">
+          <FontAwesomeIcon onClick={handleLogout} icon={faSignOut} />
+          Logout
+        </button>
       </div>
-    </div>
-  </nav>
+    </nav>
   );
 };

@@ -1,3 +1,10 @@
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 .mainForm {
     text-align: center;
     padding: 5%;
@@ -21,4 +28,44 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+  }
+
+  .login-title a {
+    color: #f72585;
+    text-decoration: none;
+    font-size: 1.8rem;
+}
+
+.movies-button {
+    display: inline-block; /* Ensure button width matches text */
+    padding: 15px 25px; /* Maintain existing padding */
+    margin: 0 auto; 
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #f72585;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+.circle-button {
+    display: inline-block;
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    background-color: #f72585; 
+    color: #ffffff; 
+    font-size: 1.5rem; 
+    text-align: center; 
+    line-height: 200px; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+  }
+  
+  .circle-button:hover {
+    background-color: #d61c73; 
+    transform: translate(-50%, -50%) scale(1.1); /* Slightly enlarge the circle */
   }

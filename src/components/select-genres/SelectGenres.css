@@ -1,6 +1,7 @@
 .select-genre {
-    margin-top: 20px;
     text-align: center;
+    align-content: center;
+    height: 100vh;
 }
 
 .select-genre h2 {
