@@ -3,34 +3,35 @@ import { MovieList } from "./movie-list/MovieList";
 import { MovieModal } from "./movie-modal/MovieModal";
 import { NavBar } from "./navbar/NavBar";
 import genres from "./genres";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 
 function App({ selectedGenres, searchQuery, setSearchQuery }) {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        let queryString = {};
-        if (selectedGenres && selectedGenres.length > 0) {
-          const genreIds = selectedGenres.map((g) => g.id).join(",");
-          queryString = { genres: genreIds };
-        }       
-        if (searchQuery) {
-          console.log(searchQuery);
-          queryString = { search: searchQuery };
-        }
-
-        const data = await API.get("MovieAPI", "/movies", { queryStringParameters: queryString });
-
-        console.log("Fetch data:", data.results);
-        setMovies(data.results);
-      } catch (err) {
-        console.log("Error fetching movies:", err);
+  const fetchMovies = async () => {
+    try {
+      let queryString = {};
+      if (selectedGenres && selectedGenres.length > 0) {
+        const genreIds = selectedGenres.map((g) => g.id).join(",");
+        queryString = { genres: genreIds };
       }
-    };
+      if (searchQuery) {
+        queryString = { search: searchQuery };
+      }
 
+      const data = await API.get("MovieAPI", "/movies", {
+        queryStringParameters: queryString
+      });
+
+      console.log("Fetch data: ", data.results);
+      setMovies(data.results);
+    } catch (err) {
+      console.log("Error fetching movies:", err);
+    }
+  };
+
+  useEffect(() => {
     fetchMovies();
   }, [selectedGenres, searchQuery]);
 
@@ -44,7 +45,7 @@ function App({ selectedGenres, searchQuery, setSearchQuery }) {
 
   return (
     <div className="container">
-      <NavBar setSearchQuery={setSearchQuery}/>
+      <NavBar setSearchQuery={setSearchQuery} />
       <MovieList movies={movies} clickMovie={clickMovie} />
       {selectedMovie && (
         <MovieModal

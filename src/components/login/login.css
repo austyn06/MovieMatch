@@ -1,13 +1,8 @@
-.center {
+.login-form {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
-
-.mainForm {
-    text-align: center;
-    padding: 5%;
 }
 .inputLabel {
     margin-left: 2%;
@@ -37,8 +32,8 @@
 }
 
 .movies-button {
-    display: inline-block; /* Ensure button width matches text */
-    padding: 15px 25px; /* Maintain existing padding */
+    display: inline-block;
+    padding: 15px 25px;
     margin: 0 auto; 
     border-radius: 20px;
     cursor: pointer;
@@ -67,5 +62,5 @@
   
   .circle-button:hover {
     background-color: #d61c73; 
-    transform: translate(-50%, -50%) scale(1.1); /* Slightly enlarge the circle */
+    transform: translate(-50%, -50%) scale(1.1);
   }

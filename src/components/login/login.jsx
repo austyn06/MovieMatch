@@ -37,7 +37,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="login-page">
+    <div className="login-form">
       <Authenticator 
         onStateChange={handleAuthStateChange}
         authState={authState}
