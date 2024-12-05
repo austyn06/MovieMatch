@@ -48,14 +48,12 @@ export const NavBar = ({ setSearchQuery }) => {
         <NavLink
           to="/movie-genres"
           className="nav-link"
-          activeclassname="active"
         >
           <FontAwesomeIcon icon={faFilm} />
           Genres
         </NavLink>
-        {/* Replaced NavLink with button for logout functionality */}
         <button onClick={handleLogout} className="nav-link">
-          <FontAwesomeIcon onClick={handleLogout} icon={faSignOut} />
+          <FontAwesomeIcon icon={faSignOut} />
           Logout
         </button>
       </div>

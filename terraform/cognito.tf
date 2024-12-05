@@ -65,7 +65,7 @@ resource "aws_cognito_user_pool_domain" "user_pool_domain" {
 
 # Add a Lambda function to auto-confirm users
 resource "aws_lambda_function" "auto_confirm_user" {
-  filename      = "auto_confirm.zip"  # You'll need to create this
+  filename      = "auto_confirm.zip"
   function_name = "auto-confirm-user"
   role         = aws_iam_role.cognito_lambda_role.arn
   handler      = "index.handler"
