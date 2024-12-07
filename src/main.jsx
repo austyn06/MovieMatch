@@ -38,19 +38,16 @@ function Main() {
         />
         <Route
           path="/movies"
-          element={isAuthenticated ? <App selectedGenres={selectedGenres} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/> : <Navigate to="/" />}
+          element={<App selectedGenres={selectedGenres} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>}
         />
         <Route
           path="/movie-genres"
           element={
-            isAuthenticated ?
             <SelectGenres
               selectedGenres={selectedGenres}
               setSelectedGenres={setSelectedGenres}
               setSearchQuery={setSearchQuery}
             />
-            :
-            <Navigate to="/" />
           }
         />
       </Routes>

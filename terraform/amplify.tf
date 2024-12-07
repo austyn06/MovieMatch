@@ -28,7 +28,13 @@ resource "aws_amplify_app" "amplify_app" {
   custom_rule {
     source = "</*>"
     target = "/index.html"
-    status = 200
+    status = "404-200"
+  }
+
+  custom_rule {
+    source = "</^[^.]+$|\\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|woff2|ttf|map|json|webp|html|xml|webmanifest|mp4)$)([^.]+$)/>"
+    target = "/index.html"
+    status = "200"
   }
 }
 
