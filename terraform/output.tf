@@ -15,7 +15,7 @@ output "user_pool_domain" {
 }
 
 output "VITE_AWS_REGION" {
-  value = var.aws_region
+  value = var.region
 }
 
 output "VITE_USER_POOL_ID" {
@@ -35,9 +35,5 @@ output "VITE_AMPLIFY_APP_URL" {
 }
 
 output "VITE_API_GATEWAY_URL" {
-  value = aws_api_gateway_deployment.deployment.invoke_url
-}
-
-output "VITE_TMDB_API_KEY" {
-  value = var.tmdb_api_key
+  value = aws_api_gateway_stage.prod.invoke_url
 }

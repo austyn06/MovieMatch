@@ -104,7 +104,6 @@ resource "aws_api_gateway_integration_response" "movies_options_integration_resp
 # API Deployment Configuration
 resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.movie_api.id
-  stage_name  = "prod"
 
   depends_on = [
     # GET method and integration
@@ -121,4 +120,10 @@ resource "aws_api_gateway_deployment" "deployment" {
     aws_api_gateway_method_response.movies_options_method_response,
     aws_api_gateway_integration_response.movies_options_integration_response
   ]
+}
+
+resource "aws_api_gateway_stage" "prod" {
+  deployment_id = aws_api_gateway_deployment.deployment.id
+  rest_api_id   = aws_api_gateway_rest_api.movie_api.id
+  stage_name    = "prod"
 }

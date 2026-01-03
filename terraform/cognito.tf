@@ -46,7 +46,7 @@ resource "aws_cognito_user_pool_client" "app_client" {
     "ALLOW_USER_SRP_AUTH"
   ]
 
-   # Disable any verification requirements
+  # Disable any verification requirements
   prevent_user_existence_errors = "ENABLED"
 
   allowed_oauth_flows  = ["code"]

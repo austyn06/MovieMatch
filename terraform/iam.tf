@@ -1,4 +1,3 @@
-# iam.tf
 resource "aws_iam_role" "lambda_role" {
   name = "tmdb_lambda_role"
 
@@ -74,7 +73,6 @@ resource "aws_iam_role" "cognito_lambda_role" {
   })
 }
 
-# Basic Lambda execution role policy
 resource "aws_iam_role_policy_attachment" "cognito_lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   role       = aws_iam_role.lambda_role.name
