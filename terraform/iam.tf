@@ -22,11 +22,6 @@ resource "aws_iam_policy" "lambda_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow",
-        Action   = "secretsmanager:GetSecretValue",
-        Resource = "*"
-      },
-      {
         Effect = "Allow",
         Action = [
           "logs:CreateLogGroup",
@@ -41,8 +36,8 @@ resource "aws_iam_policy" "lambda_policy" {
         Resource = "${aws_s3_bucket.movie_data.arn}/*"
       },
       {
-        Effect = "Allow",
-        Action = [ "neptune-db:connect"],
+        Effect   = "Allow",
+        Action   = ["neptune-db:connect"],
         Resource = "*"
       }
     ]
