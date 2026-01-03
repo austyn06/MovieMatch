@@ -3,7 +3,7 @@ resource "random_id" "bucket_suffix" {
 }
 
 resource "aws_s3_bucket" "movie_data" {
-  bucket = "team-7-tmdb-movie-data-${random_id.bucket_suffix.hex}"
+  bucket        = "team-7-tmdb-movie-data-${random_id.bucket_suffix.hex}"
   force_destroy = true
 
   tags = {
@@ -12,8 +12,7 @@ resource "aws_s3_bucket" "movie_data" {
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.movie_data.bucket
-
+  bucket     = aws_s3_bucket.movie_data.bucket
   acl        = "public-read"
   depends_on = [aws_s3_bucket_ownership_controls.s3_bucket_acl_ownership]
 }

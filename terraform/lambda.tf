@@ -15,7 +15,7 @@ resource "aws_lambda_function" "tmdb_fetcher" {
 
   environment {
     variables = {
-      TMDB_API_KEY = var.tmdb_api_key
+      TMDB_API_KEY      = var.tmdb_api_key
       MOVIE_DATA_BUCKET = aws_s3_bucket.movie_data.bucket
       # NEPTUNE_ENDPOINT  = aws_neptune_cluster.neptune_cluster.endpoint
     }
@@ -43,4 +43,12 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   function_name = aws_lambda_function.tmdb_fetcher.function_name
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.lambda_schedule.arn
+}
+
+resource "aws_lambda_permission" "allow_api_gateway" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.tmdb_fetcher.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.movie_api.execution_arn}/*/*"
 }

@@ -1,7 +1,6 @@
 resource "aws_amplify_app" "amplify_app" {
-  name       = "movie-recommendation-system"
-  repository = var.repository
-
+  name                     = "movie-recommendation-system"
+  repository               = var.repository
   access_token             = var.access_token
   enable_branch_auto_build = true
 
@@ -48,7 +47,7 @@ resource "aws_amplify_branch" "main" {
     VITE_USER_POOL_CLIENT_ID = aws_cognito_user_pool_client.app_client.id
     VITE_COGNITO_DOMAIN      = aws_cognito_user_pool_domain.user_pool_domain.domain
     VITE_AMPLIFY_APP_URL     = local.amplify_app_url
-    VITE_API_GATEWAY_URL     = aws_api_gateway_stage.prod.invoke_url
+    VITE_API_GATEWAY_URL     = aws_apigatewayv2_stage.default.invoke_url
   }
 }
 
