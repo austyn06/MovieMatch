@@ -1,62 +1,94 @@
-# Team 7 - Movie Recommendation App
+# MovieMatch
 
-This project is a movie recommendation app built with React and Terraform.
+A personalized movie recommendation system built with React and AWS.
+
+## Features
+
+- Genre-based filtering
+- Personalized recommendations based on likes/dislikes
+- User authentication
 
 ## Prerequisites
 
-- Node.js and npm installed
-- Terraform installed
-- GitHub token (for creating Amplify resources in AWS)
+- Node.js and npm
+- AWS account
+- Terraform
+- TMDB API key
 
-### Run React App Locally
+## Setup
 
-1. Clone the repository:
+### 1. Clone Repository
 
-   ```bash
-   git clone https://github.com/SWEN-514-FALL-2024/term-project-team7.git
-   ```
+```bash
+git clone https://github.com/austyn06/MovieMatch.git
+cd MovieMatch
+```
 
-2. Intall dependencies:
+### 2. Install Dependencies
 
-   ```bash
-   npm ci
-   ```
+```bash
+npm ci
+```
 
-3. Start the app:
+### 3. Install AWS Connector for GitHub
 
-   ```bash
-   npm run dev
-   ```
+Before deploying, install the AWS Connector for GitHub:
 
-### Deploy with Terraform
+1. Go to the [AWS Connector for GitHub](https://github.com/apps/aws-connector-for-github) page
+2. Click "Configure" or "Install"
+3. Select your GitHub account and grant access to your repository
+4. This creates a connection in the AWS Console that Amplify will use
 
-1. Navigate to the `terraform` directory:
+### 4. Create GitHub Personal Access Token (Classic)
 
-   ```bash
-   cd terraform
-   ```
+**Important:** You must create a Token (classic), NOT a fine-grained token.
 
-2. Initialize Terraform:
+1. Go to GitHub: **Settings** -> **Developer settings** -> **Personal access tokens** -> **Tokens (classic)**
+2. Click **Generate new token (classic)**
+3. Name it (e.g., "AWS Amplify")
+4. Select scopes:
+   - ✅ `repo` (Full control of private repositories)
+   - ✅ `admin:repo_hook` (Full control of repository hooks)
+5. Click **Generate token** and copy it immediately
 
-   ```bash
-   terraform init
-   ```
+### 5. Create Terraform Variables File
 
-3. Review resources that will be created:
+Create a `terraform.tfvars` file in the terraform directory with the following template:
 
-   ```bash
-   terraform plan
-   ```
+```hcl
+region       = "us-east-1"
+repository   = "https://github.com/austyn06/MovieMatch"
+branch_name  = "main"
+access_token = "YOUR_GITHUB_CLASSIC_TOKEN"
+tmdb_api_key = "YOUR_TMDB_API_KEY"
+```
 
-4. Apply the Terraform configuration:
-   ```bash
-   terraform apply -var="github_token=<YOUR_GITHUB_TOKEN>"
-   ```
+Replace the placeholder values with your actual configuration.
 
-### Clean Up Resources
+### 6. Deploy Infrastructure
 
-1. Run the destroy command in the terraform directory:
+```bash
+cd terraform
+terraform init
+terraform apply
+```
 
-   ```bash
-   terraform destroy -var="github_token=<YOUR_GITHUB_TOKEN>"
-   ```
+After `terraform apply` completes, copy the `amplify_app_url` from the output. Give Amplify 2-3 minutes to build and deploy the application. Alternatively, you can run it locally:
+
+```bash
+npm run dev
+```
+
+## How It Works
+
+1. Users sign up or log in
+3. Select genres to filter results
+4. Like/dislike movies to personalize recommendations
+5. Algorithm suggests movies based on preferences
+
+## Clean Up
+
+```bash
+cd terraform
+terraform destroy
+```
