@@ -1,9 +1,0 @@
-*.tfstate
-*.tfstate.backup
-.terraform/
-
-lambda_package/
-
-*.tfvars
-
-*.hcl

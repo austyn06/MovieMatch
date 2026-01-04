@@ -31,6 +31,8 @@ lerna-debug.log*
 
 # Terraform
 .terraform/
+lambda_package/
+.terraform.lock.hcl
 *.tfstate
 *.tfstate.*
 crash.log
